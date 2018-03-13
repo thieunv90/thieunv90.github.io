@@ -14,11 +14,12 @@
 <meta property="og:description" content="Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớ">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://thieunv.me/gallery/rotate-logs-in-rails.png">
-<meta property="og:updated_time" content="2018-03-13T07:22:31.518Z">
+<meta property="og:updated_time" content="2018-03-13T08:04:12.835Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Rotate logs in Rails">
 <meta name="twitter:description" content="Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớ">
 <meta name="twitter:image" content="https://thieunv.me/gallery/rotate-logs-in-rails.png">
+<meta property="fb:app_id" content="1678198738924298">
     
 
     
@@ -39,6 +40,17 @@
     
         <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
     
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-80833485-2', 'auto');
+ga('send', 'pageview');
+
+</script>
     
     
     
@@ -275,9 +287,14 @@
 <pre><code>sudo nano /etc/logrotate.d/&lt;your-app-name&gt;
 </code></pre><p>Giả sử Rails application nằm ở home directory của <code>deploy</code> user, dưới đây là một số config thông dụng mình hay dùng:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/home/deploy/&lt;your-app-name&gt;/current/log/*.log &#123;</span><br><span class="line">  daily</span><br><span class="line">  missingok</span><br><span class="line">  rotate 7</span><br><span class="line">  dateext</span><br><span class="line">  notifempty</span><br><span class="line">  copytruncate</span><br><span class="line"></span><br><span class="line">  compress</span><br><span class="line">  delaycompress</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><code>daily</code>- Rotate log file mỗi ngày 1 lần, ngoài ra còn có các options khác như: <em>weekly</em>, <em>monthly</em><br><code>missingok</code>- Nếu log file không tồn tại, ignore không báo lỗi.<br><code>rotate 7</code>- Chỉ giữ lại 7 log files (với setting <code>daily</code> ở trên thì tương ứng với việc giữ lại log của 7 ngày gần nhất)<br><code>dateext</code>- Đổi extension thành date format (YYYYMMDD) ví dụ như <em>production.log.20180311</em>, <em>production.log.20180312</em>, thay vì default là number (<em>production.log.0</em>, <em>production.log.1</em>)<br><code>notifempty</code> - Không rotate nếu log file empty<br><code>copytruncate</code> - Copy log file và sau đó truncate empty file log đó, được sử dụng để đề phòng đến trường hợp một số ứng dụng không thể close log file mà write vào previous log file cũ mãi mãi. Lưu ý rằng có một khoảng thời gian rất nhỏ giữa việc copy và truncate, điều này dẫn đến việc một số logging data có thể sẽ bị mất trong quá trình copy.<br><code>compress</code>- Compress log file bằng Gzip khi rotate, file sau khi được compress sẽ có dạng <code>production.log.1.gz</code>, <code>production.log.2.gz</code><br><code>delaycompress</code> - Gzip previous log file khi sang next rotation cycle, chỉ có tác dụng khi setting cùng với <code>compress</code>, setting này được sử dụng để đề phòng đến trường hợp một số ứng dụng không thể close log file mà thỉnh thoảng vẫn tiếp tục write vào previous log file cũ.</p>
-</blockquote>
+<p><code>daily</code>- Rotate log file mỗi ngày 1 lần, ngoài ra còn có các options khác như: <em>weekly</em>, <em>monthly</em></p>
+<p><code>missingok</code>- Nếu log file không tồn tại, ignore không báo lỗi.</p>
+<p><code>rotate 7</code>- Chỉ giữ lại 7 log files (với setting <code>daily</code> ở trên thì tương ứng với việc giữ lại log của 7 ngày gần nhất)</p>
+<p><code>dateext</code>- Đổi extension thành date format (YYYYMMDD) ví dụ như <em>production.log.20180311</em>, <em>production.log.20180312</em>, thay vì default là number (<em>production.log.0</em>, <em>production.log.1</em>)</p>
+<p><code>notifempty</code> - Không rotate nếu log file empty</p>
+<p><code>copytruncate</code> - Copy log file và sau đó truncate empty file log đó, được sử dụng để đề phòng đến trường hợp một số ứng dụng không thể close log file mà write vào previous log file cũ mãi mãi. Lưu ý rằng có một khoảng thời gian rất nhỏ giữa việc copy và truncate, điều này dẫn đến việc một số logging data có thể sẽ bị mất trong quá trình copy.</p>
+<p><code>compress</code>- Compress log file bằng Gzip khi rotate, file sau khi được compress sẽ có dạng <em>production.log.1.gz</em>, <em>production.log.2.gz</em></p>
+<p><code>delaycompress</code> - Gzip previous log file khi sang next rotation cycle, chỉ có tác dụng khi setting cùng với <code>compress</code>, setting này được sử dụng để đề phòng đến trường hợp một số ứng dụng không thể close log file mà thỉnh thoảng vẫn tiếp tục write vào previous log file cũ.</p>
 <p>Ngoài ra:</p>
 <ul>
 <li>Nếu muốn rotate theo file size thì <del>bỏ option <code>daily</code></del>, thêm vào option <code>size 10M</code> (max file size của mỗi log file là 10MB | <code>k</code>-<code>kilobytes</code>, <code>M</code>-<code>megabytes</code>, <code>G</code>-<code>gigabytes</code>), lưu ý là 2 option <strong>daily và size không tồn tại đồng thời với nhau</strong>.</li>
@@ -307,7 +324,7 @@
 
 </div>
 
-    <a data-url="https://thieunv.me/rotate-logs-in-rails/" data-id="cjepbxoof0001m73c60hhts5a" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://thieunv.me/rotate-logs-in-rails/" data-id="cjepf9bvi0002aw3cfoahezwz" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
