@@ -14,7 +14,7 @@
 <meta property="og:description" content="Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớ">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://thieunv.me/gallery/rotate-logs-in-rails.png">
-<meta property="og:updated_time" content="2018-03-13T04:50:31.493Z">
+<meta property="og:updated_time" content="2018-03-13T07:22:31.518Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Rotate logs in Rails">
 <meta name="twitter:description" content="Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớ">
@@ -266,7 +266,7 @@
 <p><code>config/enviroments/production.rb</code><br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.logger = Logger.new(<span class="string">'log/production.log'</span>, <span class="string">'daily'</span>)</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.logger = Logger.new(<span class="string">'log/production.log'</span>, <span class="string">'weekly'</span>)</span><br></pre></td></tr></table></figure>
 <figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.logger = Logger.new(<span class="string">'log/production.log'</span>, <span class="string">'monthly'</span>)</span><br></pre></td></tr></table></figure>
-<p>Các log file được đặt tên theo format <code>production.log.20180311</code>, <code>production.log.20180312</code>, …<br>Không giống như config theo size, <strong><code>khi config theo cách này thì các file logs sẽ không tự động được xoá</code></strong>, và nếu không để ý thì một ngày nào đó nó sẽ chiếm hết dung lượng ở cứng của bạn đấy.</p>
+<p>Các log file sẽ có format là <code>production.log.20180310</code>, <code>production.log.20180311</code>, <code>production.log.20180312</code>, …<br>Không giống như config theo size, <strong>khi config theo cách này thì các file logs sẽ không tự động được xoá</strong>, và nếu không để ý thì một ngày nào đó nó sẽ chiếm hết dung lượng ở cứng của bạn đấy.</p>
 <h2 id="Logrotate"><a href="#Logrotate" class="headerlink" title="Logrotate"></a>Logrotate</h2><p>Cách khác để rotate là sử dụng Logrotate, Logrotate cung cấp nhiều tính năng hơn, ví dụ như rotate theo daily nhưng chỉ giữ lại 10 log files tương ứng với 10 ngày gần nhất, compress log file, v.v…</p>
 <p>Sau đây là các bước cài đặt và cách dùng:</p>
 <h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">---------- On Debian and Ubuntu ----------</span><br><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install logrotate</span><br><span class="line"></span><br><span class="line">---------- On CentOS, RHEL and Fedora ----------</span><br><span class="line">yum update &amp;&amp; yum install logrotate</span><br><span class="line"></span><br><span class="line">---------- On MacOSX using Homebrew ----------</span><br><span class="line">brew install logrotate</span><br></pre></td></tr></table></figure>
@@ -280,7 +280,7 @@
 </blockquote>
 <p>Ngoài ra:</p>
 <ul>
-<li>Nếu muốn rotate theo file size thì <del>bỏ option <code>daily</code></del>, thêm vào option <code>size 10M</code> (max file size của mỗi log file là 10MB | <code>k</code>-<code>kilobytes</code>, <code>M</code>-<code>megabytes</code>, <code>G</code>-<code>gigabytes</code>), lưu ý là 2 option <strong><code>daily và size không tồn tại đồng thời với nhau</code></strong>.</li>
+<li>Nếu muốn rotate theo file size thì <del>bỏ option <code>daily</code></del>, thêm vào option <code>size 10M</code> (max file size của mỗi log file là 10MB | <code>k</code>-<code>kilobytes</code>, <code>M</code>-<code>megabytes</code>, <code>G</code>-<code>gigabytes</code>), lưu ý là 2 option <strong>daily và size không tồn tại đồng thời với nhau</strong>.</li>
 <li>Nếu muốn các log files cũ trong 1 folder riêng biệt nào đó (không phải trong folder <code>log</code> của Rails application) thì thêm vào option <code>olddir /var/&lt;path-to-your-custom-directory&gt;</code></li>
 </ul>
 <h3 id="How-To-Run"><a href="#How-To-Run" class="headerlink" title="How To Run"></a>How To Run</h3><p>Bước cuối cùng là chạy logrotate file config phía trên, có 2 cách (manually và automatically):</p>
@@ -307,7 +307,7 @@
 
 </div>
 
-    <a data-url="https://thieunv.me/rotate-logs-in-rails/" data-id="cjepb0se00002p83ckdihmgeg" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://thieunv.me/rotate-logs-in-rails/" data-id="cjepbxoof0001m73c60hhts5a" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
