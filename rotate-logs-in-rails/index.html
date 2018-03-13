@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Rotate logs in Rails | Thieu Nguyen&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớ">
+<meta name="keywords" content="logrotate,logs,rails,rotate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rotate logs in Rails">
+<meta property="og:url" content="https://thieunv.me/rotate-logs-in-rails/index.html">
+<meta property="og:site_name" content="Thieu Nguyen&#39;s Blog">
+<meta property="og:description" content="Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớ">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://thieunv.me/gallery/rotate-logs-in-rails.png">
+<meta property="og:updated_time" content="2018-03-13T04:50:31.493Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Rotate logs in Rails">
+<meta name="twitter:description" content="Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớ">
+<meta name="twitter:image" content="https://thieunv.me/gallery/rotate-logs-in-rails.png">
+    
+
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">Thieu Nguyen&#39;s Blog</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.png" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.png" />
+            <h2 id="name">Thieu Nguyen</h2>
+            <h3 id="title">Ruby on Rails Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Tokyo, Japan</span>
+            <a id="follow" target="_blank" href="https://github.com/thieunv90">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                2
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                4
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/thieunv90" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.linkedin.com/in/thieunv/" target="_blank" title="linkedin" class=tooltip>
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://facebook.com/shinantori" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/thieunguyenit" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-rotate-logs-in-rails" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            
+	
+		<img src="/gallery/rotate-logs-in-rails.png" class="article-banner" />
+	
+
+
+
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Rotate logs in Rails
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/rotate-logs-in-rails/">
+            <time datetime="2018-03-12T07:41:15.000Z" itemprop="datePublished">2018-03-12</time>
+        </a>
+    </div>
+
+
+                        
+    <div class="article-category">
+    	<i class="fa fa-folder"></i>
+        <a class="article-category-link" href="/categories/rails/">rails</a>
+    </div>
+
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/logrotate/">logrotate</a>, <a class="tag-link" href="/tags/logs/">logs</a>, <a class="tag-link" href="/tags/rails/">rails</a>, <a class="tag-link" href="/tags/rotate/">rotate</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớn thì tốc độ phình to sẽ rất nhanh. Đến một lúc nào đó sẽ làm cho ổ cứng hết dung lượng, khi đó sẽ phát sinh một số lỗi gây ảnh hưởng đến ứng dụng (chẳng hạn như việc không load được thư viện jQuery làm vỡ layout, v.v..). Hơn nữa, log file càng lớn thì sẽ tốn một khoảng thời gian khá lâu để mở mỗi khi muốn debug. Vì vậy, cần thiết phải “chia để trị” chúng.</p>
+<a id="more"></a>
+<p>Hôm nay mình xin giới thiệu 2 cách để rotate logs, tuy không mới nhưng chắc có một số bạn mới làm việc với Rails sẽ không để ý đến.</p>
+<h2 id="Ruby-Logger-class"><a href="#Ruby-Logger-class" class="headerlink" title="Ruby Logger class"></a>Ruby Logger class</h2><p><a href="http://ruby-doc.org/stdlib-2.2.3/libdoc/logger/rdoc/Logger.html" target="_blank" rel="noopener">Ruby default Logger</a> cung cấp build-in có sẵn hỗ trợ việc rotate logs, có 2 options:</p>
+<h3 id="Split-by-size"><a href="#Split-by-size" class="headerlink" title="Split by size"></a>Split by size</h3><p><code>config/enviroments/production.rb</code><br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.logger = Logger.new(<span class="string">'log/production.log'</span>, <span class="number">5</span>, <span class="number">10</span>.megabytes)</span><br></pre></td></tr></table></figure></p>
+<p>Khi được set như trên thì hệ thống sẽ tự động tạo new log file mỗi khi dung lượng vượt quá <strong>10MB</strong>, chỉ giữ lại tối đa <strong>5</strong> files, các log file cũ sẽ được đặt tên thành: <code>production.log.0</code>, <code>production.log.1</code>, …</p>
+<h3 id="Split-by-days"><a href="#Split-by-days" class="headerlink" title="Split by days"></a>Split by days</h3><p>Ngoài cách config theo size ở trên thì Ruby còn hỗ trợ cách set theo <strong>daily/weekly/monthly</strong> như sau:</p>
+<p><code>config/enviroments/production.rb</code><br><figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.logger = Logger.new(<span class="string">'log/production.log'</span>, <span class="string">'daily'</span>)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.logger = Logger.new(<span class="string">'log/production.log'</span>, <span class="string">'weekly'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config.logger = Logger.new(<span class="string">'log/production.log'</span>, <span class="string">'monthly'</span>)</span><br></pre></td></tr></table></figure>
+<p>Các log file được đặt tên theo format <code>production.log.20180311</code>, <code>production.log.20180312</code>, …<br>Không giống như config theo size, <strong><code>khi config theo cách này thì các file logs sẽ không tự động được xoá</code></strong>, và nếu không để ý thì một ngày nào đó nó sẽ chiếm hết dung lượng ở cứng của bạn đấy.</p>
+<h2 id="Logrotate"><a href="#Logrotate" class="headerlink" title="Logrotate"></a>Logrotate</h2><p>Cách khác để rotate là sử dụng Logrotate, Logrotate cung cấp nhiều tính năng hơn, ví dụ như rotate theo daily nhưng chỉ giữ lại 10 log files tương ứng với 10 ngày gần nhất, compress log file, v.v…</p>
+<p>Sau đây là các bước cài đặt và cách dùng:</p>
+<h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">---------- On Debian and Ubuntu ----------</span><br><span class="line">sudo apt-get update &amp;&amp; sudo apt-get install logrotate</span><br><span class="line"></span><br><span class="line">---------- On CentOS, RHEL and Fedora ----------</span><br><span class="line">yum update &amp;&amp; yum install logrotate</span><br><span class="line"></span><br><span class="line">---------- On MacOSX using Homebrew ----------</span><br><span class="line">brew install logrotate</span><br></pre></td></tr></table></figure>
+<h3 id="How-To-Use"><a href="#How-To-Use" class="headerlink" title="How To Use"></a>How To Use</h3><p>Sau khi install xong, bạn có thể config thẳng trong file <code>/etc/logrotate.conf</code> hoặc tách biệt thành config riêng trong thư mục <code>/etc/logrotate.d</code> (đảm bảo rằng dòng <code>include /etc/logrotate.d</code> có tồn tại trong <code>/etc/logrotate.conf</code> và không bị commented out)</p>
+<p>Ở đây, mình sẽ chọn cách 2, tách thành config riêng biệt và đặt trong <code>/etc/logrotate.d</code>. Dùng command bên dưới để tạo logrotate config file cho Rails app của bạn:</p>
+<pre><code>sudo nano /etc/logrotate.d/&lt;your-app-name&gt;
+</code></pre><p>Giả sử Rails application nằm ở home directory của <code>deploy</code> user, dưới đây là một số config thông dụng mình hay dùng:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/home/deploy/&lt;your-app-name&gt;/current/log/*.log &#123;</span><br><span class="line">  daily</span><br><span class="line">  missingok</span><br><span class="line">  rotate 7</span><br><span class="line">  dateext</span><br><span class="line">  notifempty</span><br><span class="line">  copytruncate</span><br><span class="line"></span><br><span class="line">  compress</span><br><span class="line">  delaycompress</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>daily</code>- Rotate log file mỗi ngày 1 lần, ngoài ra còn có các options khác như: <em>weekly</em>, <em>monthly</em><br><code>missingok</code>- Nếu log file không tồn tại, ignore không báo lỗi.<br><code>rotate 7</code>- Chỉ giữ lại 7 log files (với setting <code>daily</code> ở trên thì tương ứng với việc giữ lại log của 7 ngày gần nhất)<br><code>dateext</code>- Đổi extension thành date format (YYYYMMDD) ví dụ như <em>production.log.20180311</em>, <em>production.log.20180312</em>, thay vì default là number (<em>production.log.0</em>, <em>production.log.1</em>)<br><code>notifempty</code> - Không rotate nếu log file empty<br><code>copytruncate</code> - Copy log file và sau đó truncate empty file log đó, được sử dụng để đề phòng đến trường hợp một số ứng dụng không thể close log file mà write vào previous log file cũ mãi mãi. Lưu ý rằng có một khoảng thời gian rất nhỏ giữa việc copy và truncate, điều này dẫn đến việc một số logging data có thể sẽ bị mất trong quá trình copy.<br><code>compress</code>- Compress log file bằng Gzip khi rotate, file sau khi được compress sẽ có dạng <code>production.log.1.gz</code>, <code>production.log.2.gz</code><br><code>delaycompress</code> - Gzip previous log file khi sang next rotation cycle, chỉ có tác dụng khi setting cùng với <code>compress</code>, setting này được sử dụng để đề phòng đến trường hợp một số ứng dụng không thể close log file mà thỉnh thoảng vẫn tiếp tục write vào previous log file cũ.</p>
+</blockquote>
+<p>Ngoài ra:</p>
+<ul>
+<li>Nếu muốn rotate theo file size thì <del>bỏ option <code>daily</code></del>, thêm vào option <code>size 10M</code> (max file size của mỗi log file là 10MB | <code>k</code>-<code>kilobytes</code>, <code>M</code>-<code>megabytes</code>, <code>G</code>-<code>gigabytes</code>), lưu ý là 2 option <strong><code>daily và size không tồn tại đồng thời với nhau</code></strong>.</li>
+<li>Nếu muốn các log files cũ trong 1 folder riêng biệt nào đó (không phải trong folder <code>log</code> của Rails application) thì thêm vào option <code>olddir /var/&lt;path-to-your-custom-directory&gt;</code></li>
+</ul>
+<h3 id="How-To-Run"><a href="#How-To-Run" class="headerlink" title="How To Run"></a>How To Run</h3><p>Bước cuối cùng là chạy logrotate file config phía trên, có 2 cách (manually và automatically):</p>
+<p><strong>Manually</strong></p>
+<p>Rất đơn giản, dùng command:</p>
+<pre><code>sudo logrotate /etc/logrotate.d/&lt;your-app-name&gt;
+</code></pre><p><strong>Automatically</strong></p>
+<p>Ví dụ bây giờ mình muốn tạo cron job để rotate tự động mỗi ngày.</p>
+<p>Đầu tiên, dùng command sau để tạo cron config cho logrotate:</p>
+<pre><code>sudo nano /etc/cron.daily/logrotate
+</code></pre><p>Nội dung cron config:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"></span><br><span class="line">/usr/sbin/logrotate /etc/logrotate.conf &gt;/dev/null</span><br><span class="line">EXITVALUE=$?</span><br><span class="line">if [ $EXITVALUE != 0 ]; then</span><br><span class="line">    /usr/bin/logger -t logrotate &quot;ALERT exited abnormally with [$EXITVALUE]&quot;</span><br><span class="line">fi</span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+<p>Done, bây giờ thì bạn đã có cron job rotate log tự động mỗi ngày.</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>Trên đây là toàn bộ những chia sẻ của mình về cách config để rotate log file trong Rails application cũng như với các log files khác. Việc rotate là cần thiết vì nó giúp chia nhỏ các file log ra, dễ dàng và nhanh chóng mở log file ra để đọc và debug, đồng thời cũng không gây ra issue về dung lượng ổ cứng.</p>
+<p>Hy vọng bài viết sẽ giúp ích cho các bạn.</p>
+<h2 id="Referrences"><a href="#Referrences" class="headerlink" title="Referrences"></a>Referrences</h2><p><a href="https://www.tecmint.com/install-logrotate-to-manage-log-rotation-in-linux" target="_blank" rel="noopener">https://www.tecmint.com/install-logrotate-to-manage-log-rotation-in-linux</a><br><a href="http://manpages.ubuntu.com/manpages/trusty/man8/logrotate.8.html" target="_blank" rel="noopener">http://manpages.ubuntu.com/manpages/trusty/man8/logrotate.8.html</a><br><a href="https://gorails.com/guides/rotating-rails-production-logs-with-logrotate" target="_blank" rel="noopener">https://gorails.com/guides/rotating-rails-production-logs-with-logrotate</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="https://thieunv.me/rotate-logs-in-rails/" data-id="cjepa6y3t0002y63cqxt4b55b" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="https://thieunv.me/rotate-logs-in-rails/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://thieunv.me/rotate-logs-in-rails/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/my-journey-begins/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">My journey begins...</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/miscellaneous/">miscellaneous</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/rails/">rails</a><span class="category-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">2</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/logrotate/">logrotate</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logs/">logs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rails/">rails</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rotate/">rotate</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/logrotate/" style="font-size: 10px;">logrotate</a> <a href="/tags/logs/" style="font-size: 10px;">logs</a> <a href="/tags/rails/" style="font-size: 10px;">rails</a> <a href="/tags/rotate/" style="font-size: 10px;">rotate</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Thieu Nguyen's blog. All rights reserved. <br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'https://thieunv.me/rotate-logs-in-rails/';
+        
+        this.page.identifier = 'rotate-logs-in-rails';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'thieunv' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
