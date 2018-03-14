@@ -3,18 +3,22 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Thieu Nguyen&#39;s Blog</title>
+    <title>Responsive CSS Spacing Helper Classes | Thieu Nguyen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="Write somethings about programming, life, travel, etc...">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Thieu Nguyen&#39;s Blog">
-<meta property="og:url" content="https://thieunv.me/index.html">
+    <meta name="description" content="IntroductionKhi positioning một element sử dụng margin &amp;amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính @media định nghĩa ra các breakpoints rồi trên">
+<meta name="keywords" content="css,less,sass,margin,padding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Responsive CSS Spacing Helper Classes">
+<meta property="og:url" content="https://thieunv.me/responsive-css-spacing-helper-classes/index.html">
 <meta property="og:site_name" content="Thieu Nguyen&#39;s Blog">
-<meta property="og:description" content="Write somethings about programming, life, travel, etc...">
+<meta property="og:description" content="IntroductionKhi positioning một element sử dụng margin &amp;amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính @media định nghĩa ra các breakpoints rồi trên">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="https://thieunv.me/gallery/responsive-css-spacing-classes.png">
+<meta property="og:updated_time" content="2018-03-14T12:05:09.649Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Thieu Nguyen&#39;s Blog">
-<meta name="twitter:description" content="Write somethings about programming, life, travel, etc...">
+<meta name="twitter:title" content="Responsive CSS Spacing Helper Classes">
+<meta name="twitter:description" content="IntroductionKhi positioning một element sử dụng margin &amp;amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính @media định nghĩa ra các breakpoints rồi trên">
+<meta name="twitter:image" content="https://thieunv.me/gallery/responsive-css-spacing-classes.png">
 <meta property="fb:app_id" content="1678198738924298">
     
 
@@ -213,15 +217,12 @@ ga('send', 'pageview');
 </aside>
 
             
-            <section id="main">
-    <article id="post-responsive-css-spacing-helper-classes" class="article article-type-post" itemscope itemprop="blogPost">
+            <section id="main"><article id="post-responsive-css-spacing-helper-classes" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
             
 	
-		<a href="/responsive-css-spacing-helper-classes/" itemprop="url">
-            <img src="/gallery/responsive-css-spacing-classes.png" class="article-banner" />
-        </a>
+		<img src="/gallery/responsive-css-spacing-classes.png" class="article-banner" />
 	
 
 
@@ -231,8 +232,8 @@ ga('send', 'pageview');
             <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="article-title" href="/responsive-css-spacing-helper-classes/">Responsive CSS Spacing Helper Classes</a>
+        <h1 class="article-title" itemprop="name">
+            Responsive CSS Spacing Helper Classes
         </h1>
     
 
@@ -266,11 +267,58 @@ ga('send', 'pageview');
         
         <div class="article-entry" itemprop="articleBody">
         
-            <p><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Khi positioning một element sử dụng margin &amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính <code>@media</code> định nghĩa ra các breakpoints rồi trên từng breakpoint sẽ css margin và padding cho element đó.</p>
-<p>Tuy nhiên, hôm nay mình sẽ giới thiệu 1 cách khác không cần sử dụng thuộc tính <code>@media</code> trên element mà vẫn có thể positioning được, bằng cách tạo ra 1 bộ helper class với các giá trị margin và padding được set sẵn trên từng breakpoint cụ thể.</p></p>
-            <p class="article-more-link">
-                <a href="/responsive-css-spacing-helper-classes/#more">Read More</a>
-            </p>
+            
+            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Khi positioning một element sử dụng margin &amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính <code>@media</code> định nghĩa ra các breakpoints rồi trên từng breakpoint sẽ css margin và padding cho element đó.</p>
+<p>Tuy nhiên, hôm nay mình sẽ giới thiệu 1 cách khác không cần sử dụng thuộc tính <code>@media</code> trên element mà vẫn có thể positioning được, bằng cách tạo ra 1 bộ helper class với các giá trị margin và padding được set sẵn trên từng breakpoint cụ thể.</p>
+<a id="more"></a>
+<h2 id="Example-amp-Explanation"><a href="#Example-amp-Explanation" class="headerlink" title="Example &amp; Explanation"></a>Example &amp; Explanation</h2><p>Để hiểu rõ hơn ý mình nói ở trên, các bạn xem ví dụ sau đây:</p>
+<p>Giả sử mình đang dùng bootstrap và có layout structure như sau:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"content"</span> <span class="attr">class</span>=<span class="string">"col-md-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- content --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"sidebar"</span> <span class="attr">class</span>=<span class="string">"col-md-4"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- sidebar --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- "row" --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- "container" --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Bây giờ mình muốn:</p>
+<ul>
+<li>Trên desktop và tablet: sidebar và content có margin cách bottom 1 khoảng là 20px</li>
+<li>Trên các thiết bị có kích cỡ màn hình 768px hoặc nhỏ hơn thì cách bottom 40px.</li>
+</ul>
+<p>Thông thường thì các bạn sẽ viết css như sau:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#content</span>, <span class="selector-id">#sidebar</span> &#123;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@media(max-width:767px) &#123;</span><br><span class="line">  <span class="selector-id">#content</span>, <span class="selector-id">#sidebar</span> &#123;</span><br><span class="line">    <span class="attribute">margin-bottom</span>: <span class="number">40px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Tuy nhiên, với việc định nghĩa sẵn bộ helper classes thì các bạn không cần phải viết thêm dòng code css nào như trên, chỉ đơn giản thêm vào helper class <code>xs-mb-40</code> và  <code>md-mb-20</code> như code bên dưới:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"content"</span> <span class="attr">class</span>=<span class="string">"col-md-8 xs-mb-40 md-mb-20"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- content --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"sidebar"</span> <span class="attr">class</span>=<span class="string">"col-md-4 xs-mb-40 md-mb-20"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- sidebar --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- "row" --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- "container" --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Class có prefix <code>xs-</code> được định nghĩa trong global viewport (<code>min-width: 0px</code>) và class có  prefix <code>md-</code> được định nghĩa trong tablet viewport (<code>min-width: 768px</code>). Chi tiết các bạn xem hình và giải thích bên dưới:</p>
+<p><img src="/gallery/css-spacing-helper-class-format.png" alt="Cấu trúc của spacing helper class"></p>
+<h3 id="Phan-mau-do"><a href="#Phan-mau-do" class="headerlink" title="Phần màu đỏ"></a>Phần màu đỏ</h3><p>Định nghĩa các viewport size cho element:</p>
+<ul>
+<li><code>xs</code>: Extra small screen / phone (breakpoint: 0).<br><code>xs</code> đại diện cho global viewport, bạn có thể dùng prefix này trong trường hợp muốn tất cả các screen đều có cùng giá trị margin &amp; padding.</li>
+<li><code>sm</code>: Small screen / phone (breakpoint: 480px)</li>
+<li><code>md</code>: Medium screen / tablet (breakpoint: 768px)</li>
+<li><code>lg</code>: Large screen / desktop (breakpoint: 992px)</li>
+<li><code>xl</code>: Extra large screen / wide desktop (breakpoint: 1200px)</li>
+</ul>
+<p>Các breakpoint trên chỉ là những breakpoint phổ biến, tuỳ vào dự án bạn đang làm mà có thể điều chỉnh lại giá trị breakpoint cho phù hợp.</p>
+<h3 id="Phan-mau-xanh-duong"><a href="#Phan-mau-xanh-duong" class="headerlink" title="Phần màu xanh dương"></a>Phần màu xanh dương</h3><p>Định nghĩa thuộc tính margin hay padding nào muốn dùng:</p>
+<ul>
+<li><code>p</code> padding</li>
+<li><code>pt</code> padding-top</li>
+<li><code>pr</code> padding-right</li>
+<li><code>pb</code> padding-bottom</li>
+<li><code>pl</code> padding-left</li>
+<li><code>m</code> margin</li>
+<li><code>mt</code> margin-top</li>
+<li><code>mr</code> margin-right</li>
+<li><code>mb</code> margin-bottom</li>
+<li><code>ml</code> margin-left</li>
+</ul>
+<h3 id="Phan-mau-xanh-la"><a href="#Phan-mau-xanh-la" class="headerlink" title="Phần màu xanh lá"></a>Phần màu xanh lá</h3><p>Định nghĩa con số px dùng để margin hoặc padding, ví dụ <code>0</code>, <code>5</code>, <code>10</code>, <code>15</code>, <code>20</code>…</p>
+<h2 id="CSS-Spacing-Helper-Classes"><a href="#CSS-Spacing-Helper-Classes" class="headerlink" title="CSS Spacing Helper Classes"></a>CSS Spacing Helper Classes</h2><p>Dưới đây là toàn bộ helper classes mình muốn giới thiệu với các bạn:</p>
+<p><code>LESS</code></p>
+<script src="https://gist.github.com/thieunv90/2146fd0de2e2008858bd5acf6fc14d68.js"></script>
+
+<p><code>SASS</code></p>
+<script src="https://gist.github.com/thieunv90/aab1b6755acca5e9be79d15ba90476bb.js"></script>
+
+<p><code>CSS</code></p>
+<p>Nếu chỉ muốn dùng css, các bạn có thể dùng css preprocessors để compile sang css hoặc có thể dùng trực tiếp file đã được generate sẵn sau:<br><a href="https://github.com/thieunv90/less-space/blob/master/dist/less-space.css" target="_blank" rel="noopener">https://github.com/thieunv90/less-space/blob/master/dist/less-space.css</a></p>
+<h2 id="Source-amp-Referrences"><a href="#Source-amp-Referrences" class="headerlink" title="Source &amp; Referrences"></a>Source &amp; Referrences</h2><p><a href="http://aslanbakan.com/en/blog/less-space-responsive-css-margin-and-padding-helper-classes/" target="_blank" rel="noopener">http://aslanbakan.com/en/blog/less-space-responsive-css-margin-and-padding-helper-classes/</a></p>
+
         
         </div>
         <footer class="article-footer">
@@ -354,290 +402,30 @@ ga('send', 'pageview');
         </footer>
     </div>
     
-</article>
-
-
-
-    <article id="post-rotate-logs-in-rails" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
         
-            
-	
-		<a href="/rotate-logs-in-rails/" itemprop="url">
-            <img src="/gallery/rotate-logs-in-rails.png" class="article-banner" />
+<nav id="article-nav">
+    
+    
+        <a href="/rotate-logs-in-rails/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">Rotate logs in Rails</div>
         </a>
-	
-
-
-
-        
-        
-            <header class="article-header">
-                
     
-        <h1 itemprop="name">
-            <a class="article-title" href="/rotate-logs-in-rails/">Rotate logs in Rails</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/rotate-logs-in-rails/">
-            <time datetime="2018-03-12T07:41:15.000Z" itemprop="datePublished">2018-03-12</time>
-        </a>
-    </div>
+</nav>
 
 
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/rails/">rails</a>
-    </div>
-
-                        
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/logrotate/">logrotate</a>, <a class="tag-link" href="/tags/logs/">logs</a>, <a class="tag-link" href="/tags/rails/">rails</a>, <a class="tag-link" href="/tags/rotate/">rotate</a>
-    </div>
-
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớn thì tốc độ phình to sẽ rất nhanh. Đến một lúc nào đó sẽ làm cho ổ cứng hết dung lượng, khi đó sẽ phát sinh một số lỗi gây ảnh hưởng đến ứng dụng (chẳng hạn như việc không load được thư viện jQuery làm vỡ layout, v.v..). Hơn nữa, log file càng lớn thì sẽ tốn một khoảng thời gian khá lâu để mở mỗi khi muốn debug. Vì vậy, cần thiết phải “chia để trị” chúng.</p></p>
-            <p class="article-more-link">
-                <a href="/rotate-logs-in-rails/#more">Read More</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://thieunv.me/rotate-logs-in-rails/" data-id="cjer1i5bu0005ga3ccq0ort04" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="https://thieunv.me/rotate-logs-in-rails/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://thieunv.me/rotate-logs-in-rails/">Comments</a>
-    
-
-        </footer>
-    </div>
     
 </article>
 
 
-
-    <article id="post-my-journey-begins" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-            
-	
-		<a href="/my-journey-begins/" itemprop="url">
-            <img src="/gallery/new_year_new_start.jpg" class="article-banner" />
-        </a>
-	
-
-
-
-        
-        
-            <header class="article-header">
-                
     
-        <h1 itemprop="name">
-            <a class="article-title" href="/my-journey-begins/">My journey begins...</a>
-        </h1>
     
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/my-journey-begins/">
-            <time datetime="2018-03-10T01:37:04.000Z" itemprop="datePublished">2018-03-10</time>
-        </a>
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
-
-
-                        
-    <div class="article-category">
-    	<i class="fa fa-folder"></i>
-        <a class="article-category-link" href="/categories/miscellaneous/">miscellaneous</a>
-    </div>
-
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            <p><p>Chào mọi người, mình tên là Thiệu, 28 tuổi.</p>
-<p>Mình là 1 Rubyist và cũng có mày mò tìm hiểu một chút bên Javascript, đặc biệt là các javascript frameworks/libs như Angular, Vue, React.</p></p>
-            <p class="article-more-link">
-                <a href="/my-journey-begins/#more">Read More</a>
-            </p>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="https://thieunv.me/my-journey-begins/" data-id="cjer1i5b30000ga3coj7p56a9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
+</section>
     
-        <a href="https://thieunv.me/my-journey-begins/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="https://thieunv.me/my-journey-begins/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
 
 </section>
             
@@ -714,11 +502,13 @@ ga('send', 'pageview');
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = '';
+            this.page.url = 'https://thieunv.me/responsive-css-spacing-helper-classes/';
+        
+        this.page.identifier = 'responsive-css-spacing-helper-classes';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'thieunv' + '.disqus.com/count.js';
+        s.src = '//' + 'thieunv' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
