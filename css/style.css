@@ -2141,3 +2141,6 @@ a.article-title:hover {
 .highlight {
   font-size: 15px;
 }
+.gist .js-line-number {
+  border: none;
+}

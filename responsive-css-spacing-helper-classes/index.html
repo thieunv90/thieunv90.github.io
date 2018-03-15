@@ -5,19 +5,19 @@
     
     <title>Responsive CSS Spacing Helper Classes | Thieu Nguyen&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="IntroductionKhi positioning một element sử dụng margin &amp;amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính @media định nghĩa ra các breakpoints rồi trên">
+    <meta name="description" content="Mở đầuKhi positioning một element sử dụng margin &amp;amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính @media định nghĩa ra các breakpoints rồi trên từng b">
 <meta name="keywords" content="css,less,sass,margin,padding">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Responsive CSS Spacing Helper Classes">
 <meta property="og:url" content="https://thieunv.me/responsive-css-spacing-helper-classes/index.html">
 <meta property="og:site_name" content="Thieu Nguyen&#39;s Blog">
-<meta property="og:description" content="IntroductionKhi positioning một element sử dụng margin &amp;amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính @media định nghĩa ra các breakpoints rồi trên">
+<meta property="og:description" content="Mở đầuKhi positioning một element sử dụng margin &amp;amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính @media định nghĩa ra các breakpoints rồi trên từng b">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://thieunv.me/gallery/responsive-css-spacing-classes.png">
-<meta property="og:updated_time" content="2018-03-14T12:05:09.649Z">
+<meta property="og:updated_time" content="2018-03-15T05:41:20.366Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Responsive CSS Spacing Helper Classes">
-<meta name="twitter:description" content="IntroductionKhi positioning một element sử dụng margin &amp;amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính @media định nghĩa ra các breakpoints rồi trên">
+<meta name="twitter:description" content="Mở đầuKhi positioning một element sử dụng margin &amp;amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính @media định nghĩa ra các breakpoints rồi trên từng b">
 <meta name="twitter:image" content="https://thieunv.me/gallery/responsive-css-spacing-classes.png">
 <meta property="fb:app_id" content="1678198738924298">
     
@@ -268,10 +268,10 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Khi positioning một element sử dụng margin &amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính <code>@media</code> định nghĩa ra các breakpoints rồi trên từng breakpoint sẽ css margin và padding cho element đó.</p>
+            <h2 id="Mo-dau"><a href="#Mo-dau" class="headerlink" title="Mở đầu"></a>Mở đầu</h2><p>Khi positioning một element sử dụng margin &amp; padding trên các viewports khác nhau, cách thông thường mọi người hay làm là dùng thuộc tính <code>@media</code> định nghĩa ra các breakpoints rồi trên từng breakpoint sẽ css margin và padding cho element đó.</p>
 <p>Tuy nhiên, hôm nay mình sẽ giới thiệu 1 cách khác không cần sử dụng thuộc tính <code>@media</code> trên element mà vẫn có thể positioning được, bằng cách tạo ra 1 bộ helper class với các giá trị margin và padding được set sẵn trên từng breakpoint cụ thể.</p>
 <a id="more"></a>
-<h2 id="Example-amp-Explanation"><a href="#Example-amp-Explanation" class="headerlink" title="Example &amp; Explanation"></a>Example &amp; Explanation</h2><p>Để hiểu rõ hơn ý mình nói ở trên, các bạn xem ví dụ sau đây:</p>
+<h2 id="Vi-du-amp-giai-thich"><a href="#Vi-du-amp-giai-thich" class="headerlink" title="Ví dụ &amp; giải thích"></a>Ví dụ &amp; giải thích</h2><p>Để hiểu rõ hơn ý mình nói ở trên, các bạn xem ví dụ sau đây:</p>
 <p>Giả sử mình đang dùng bootstrap và có layout structure như sau:</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"content"</span> <span class="attr">class</span>=<span class="string">"col-md-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- content --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"sidebar"</span> <span class="attr">class</span>=<span class="string">"col-md-4"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- sidebar --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- "row" --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- "container" --&gt;</span></span><br></pre></td></tr></table></figure>
 <p>Bây giờ mình muốn:</p>
@@ -281,13 +281,13 @@ ga('send', 'pageview');
 </ul>
 <p>Thông thường thì các bạn sẽ viết css như sau:</p>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#content</span>, <span class="selector-id">#sidebar</span> &#123;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@media(max-width:767px) &#123;</span><br><span class="line">  <span class="selector-id">#content</span>, <span class="selector-id">#sidebar</span> &#123;</span><br><span class="line">    <span class="attribute">margin-bottom</span>: <span class="number">40px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Tuy nhiên, với việc định nghĩa sẵn bộ helper classes thì các bạn không cần phải viết thêm dòng code css nào như trên, chỉ đơn giản thêm vào helper class <code>xs-mb-40</code> và  <code>md-mb-20</code> như code bên dưới:</p>
+<p>Tuy nhiên, với việc định nghĩa sẵn bộ helper classes thì các bạn không cần phải viết thêm dòng code css nào như trên, chỉ đơn giản thêm vào 2 helper class <code>xs-mb-40</code> và  <code>md-mb-20</code> như code bên dưới:</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"row"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"content"</span> <span class="attr">class</span>=<span class="string">"col-md-8 xs-mb-40 md-mb-20"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- content --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"sidebar"</span> <span class="attr">class</span>=<span class="string">"col-md-4 xs-mb-40 md-mb-20"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- sidebar --&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- "row" --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="comment">&lt;!-- "container" --&gt;</span></span><br></pre></td></tr></table></figure>
 <p>Class có prefix <code>xs-</code> được định nghĩa trong global viewport (<code>min-width: 0px</code>) và class có  prefix <code>md-</code> được định nghĩa trong tablet viewport (<code>min-width: 768px</code>). Chi tiết các bạn xem hình và giải thích bên dưới:</p>
 <p><img src="/gallery/css-spacing-helper-class-format.png" alt="Cấu trúc của spacing helper class"></p>
 <h3 id="Phan-mau-do"><a href="#Phan-mau-do" class="headerlink" title="Phần màu đỏ"></a>Phần màu đỏ</h3><p>Định nghĩa các viewport size cho element:</p>
 <ul>
-<li><code>xs</code>: Extra small screen / phone (breakpoint: 0).<br><code>xs</code> đại diện cho global viewport, bạn có thể dùng prefix này trong trường hợp muốn tất cả các screen đều có cùng giá trị margin &amp; padding.</li>
+<li><code>xs</code>: Extra small screen / phone (breakpoint: 0).<br><code>xs</code> đại diện cho global viewport, bạn có thể dùng viewport này trong trường hợp muốn tất cả các screen đều mang cùng giá trị margin &amp; padding.</li>
 <li><code>sm</code>: Small screen / phone (breakpoint: 480px)</li>
 <li><code>md</code>: Medium screen / tablet (breakpoint: 768px)</li>
 <li><code>lg</code>: Large screen / desktop (breakpoint: 992px)</li>
@@ -308,16 +308,23 @@ ga('send', 'pageview');
 <li><code>ml</code> margin-left</li>
 </ul>
 <h3 id="Phan-mau-xanh-la"><a href="#Phan-mau-xanh-la" class="headerlink" title="Phần màu xanh lá"></a>Phần màu xanh lá</h3><p>Định nghĩa con số px dùng để margin hoặc padding, ví dụ <code>0</code>, <code>5</code>, <code>10</code>, <code>15</code>, <code>20</code>…</p>
-<h2 id="CSS-Spacing-Helper-Classes"><a href="#CSS-Spacing-Helper-Classes" class="headerlink" title="CSS Spacing Helper Classes"></a>CSS Spacing Helper Classes</h2><p>Dưới đây là toàn bộ helper classes mình muốn giới thiệu với các bạn:</p>
-<p><code>LESS</code></p>
-<script src="https://gist.github.com/thieunv90/2146fd0de2e2008858bd5acf6fc14d68.js"></script>
-
-<p><code>SASS</code></p>
-<script src="https://gist.github.com/thieunv90/aab1b6755acca5e9be79d15ba90476bb.js"></script>
-
-<p><code>CSS</code></p>
-<p>Nếu chỉ muốn dùng css, các bạn có thể dùng css preprocessors để compile sang css hoặc có thể dùng trực tiếp file đã được generate sẵn sau:<br><a href="https://github.com/thieunv90/less-space/blob/master/dist/less-space.css" target="_blank" rel="noopener">https://github.com/thieunv90/less-space/blob/master/dist/less-space.css</a></p>
-<h2 id="Source-amp-Referrences"><a href="#Source-amp-Referrences" class="headerlink" title="Source &amp; Referrences"></a>Source &amp; Referrences</h2><p><a href="http://aslanbakan.com/en/blog/less-space-responsive-css-margin-and-padding-helper-classes/" target="_blank" rel="noopener">http://aslanbakan.com/en/blog/less-space-responsive-css-margin-and-padding-helper-classes/</a></p>
+<h2 id="CSS-Spacing-Helper-Classes"><a href="#CSS-Spacing-Helper-Classes" class="headerlink" title="CSS Spacing Helper Classes"></a>CSS Spacing Helper Classes</h2><p>Dưới đây là nội dung helper classes mà mình muốn giới thiệu với các bạn:</p>
+<p><strong><code>LESS</code></strong><br><script src="//gist.github.com/2146fd0de2e2008858bd5acf6fc14d68.js?file=less-space.less"></script></p>
+<p>Nếu đang dùng bootstrap thì nhớ xoá mấy chỗ định nghĩa breakpoint đi nhé (dòng bắt đầu với <code>@screen-*</code>) vì nó đã được định nghĩa trong <code>variables.less</code> của bootstrap rồi.</p>
+<p>Bạn có thể compile sang file CSS trong command line bằng cách:</p>
+<ul>
+<li>Cài đặt <code>less</code> bằng command: <code>npm install less</code> (nhớ cài Nodejs trước nhé)</li>
+<li>Chạy command: <code>lessc less-space.less less-space.css</code></li>
+</ul>
+<p><strong><code>SASS</code></strong><br><script src="//gist.github.com/aab1b6755acca5e9be79d15ba90476bb.js?file=sass-space.scss"></script></p>
+<p>Bạn có thể compile sang file CSS trong command line bằng cách:</p>
+<ul>
+<li><code>gem install sass</code> (Nhớ cài Ruby trước nhé)</li>
+<li><code>sass --watch sass-space.scss:sass-space.css</code></li>
+</ul>
+<p><strong><code>CSS</code></strong></p>
+<p>Trong trường hợp muốn dùng trực tiếp file css, các bạn có thể compile từ các css preprocessors sang file css như đã hướng dẫn ở trên hoặc sử dụng file đã được generate sẵn sau:<br><a href="https://github.com/thieunv90/less-space/blob/master/dist/less-space.css" target="_blank" rel="noopener">https://github.com/thieunv90/less-space/blob/master/dist/less-space.css</a></p>
+<h2 id="Nguon"><a href="#Nguon" class="headerlink" title="Nguồn"></a>Nguồn</h2><p><a href="http://aslanbakan.com/en/blog/less-space-responsive-css-margin-and-padding-helper-classes/" target="_blank" rel="noopener">http://aslanbakan.com/en/blog/less-space-responsive-css-margin-and-padding-helper-classes/</a></p>
 
         
         </div>
@@ -328,7 +335,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://thieunv.me/responsive-css-spacing-helper-classes/" data-id="cjer1i5bd0002ga3ctnnswckx" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://thieunv.me/responsive-css-spacing-helper-classes/" data-id="cjes37uqs0002w53csp36a86h" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding

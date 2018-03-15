@@ -14,7 +14,7 @@
 <meta property="og:description" content="Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớ">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://thieunv.me/gallery/rotate-logs-in-rails.png">
-<meta property="og:updated_time" content="2018-03-14T07:29:47.757Z">
+<meta property="og:updated_time" content="2018-03-15T03:13:28.222Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Rotate logs in Rails">
 <meta name="twitter:description" content="Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớ">
@@ -268,7 +268,7 @@ ga('send', 'pageview');
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớn thì tốc độ phình to sẽ rất nhanh. Đến một lúc nào đó sẽ làm cho ổ cứng hết dung lượng, khi đó sẽ phát sinh một số lỗi gây ảnh hưởng đến ứng dụng (chẳng hạn như việc không load được thư viện jQuery làm vỡ layout, v.v..). Hơn nữa, log file càng lớn thì sẽ tốn một khoảng thời gian khá lâu để mở mỗi khi muốn debug. Vì vậy, cần thiết phải “chia để trị” chúng.</p>
+            <p>Khi chạy ứng dụng Rails trên production, nếu mặc định các bạn không config gì, log file ngày qua ngày sẽ được ghi thêm vào và ngày càng phình to ra, đặc biệt đối với những ứng dụng có lượng traffic lớn thì tốc độ phình to sẽ rất nhanh. Đến một lúc nào đó có thể nảy sinh vấn đề hết dung lượng ổ cứng, khi đó sẽ phát sinh một số lỗi gây ảnh hưởng đến ứng dụng (chẳng hạn như việc không load được thư viện jQuery làm vỡ layout, v.v..). Hơn nữa, log file càng lớn thì sẽ tốn một khoảng thời gian khá lâu để mở mỗi khi muốn debug. Vì vậy, cần thiết phải “chia để trị” chúng.</p>
 <a id="more"></a>
 <p>Hôm nay mình xin giới thiệu 2 cách để rotate logs, tuy không mới nhưng chắc có một số bạn mới làm việc với Rails sẽ không để ý đến.</p>
 <h2 id="Ruby-Logger-class"><a href="#Ruby-Logger-class" class="headerlink" title="Ruby Logger class"></a>Ruby Logger class</h2><p><a href="http://ruby-doc.org/stdlib-2.2.3/libdoc/logger/rdoc/Logger.html" target="_blank" rel="noopener">Ruby default Logger</a> cung cấp build-in có sẵn hỗ trợ việc rotate logs, có 2 options:</p>
@@ -325,7 +325,7 @@ ga('send', 'pageview');
 
 </div>
 
-    <a data-url="https://thieunv.me/rotate-logs-in-rails/" data-id="cjer1i5bu0005ga3ccq0ort04" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="https://thieunv.me/rotate-logs-in-rails/" data-id="cjes37ur10004w53c8ym2s8yt" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
